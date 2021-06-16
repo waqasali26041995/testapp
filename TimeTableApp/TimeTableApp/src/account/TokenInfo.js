@@ -2,10 +2,20 @@ import React, { useState } from 'react';
 import jwtDecode from 'jwt-decode';
 
 export default function TokenInfo({token}) {
-  const { UserId, Role } = jwtDecode(token);
-  return {
-    userId: UserId,
-    Role: Role
+  if(token) {
+    const { UserId, Role, iss } = jwtDecode(token);
+    return {
+      userId: UserId,
+      Role: Role,
+      Issuer: iss
+    }
+  }
+  else {
+    return {
+      userId: null,
+      Role: null,
+      Issuer: null
+    }
   }
 }
 
