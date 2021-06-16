@@ -1,0 +1,162 @@
+.days-bg p{
+	font-size:35px;
+	font-weight:bold;
+	padding: 40px 18px;
+	display:inline;
+	
+}
+.logo-image img{
+    height: 94px;
+}
+.bg-Top-color{
+    background-color: #41464B;
+}
+.bg-color{
+    background-color:#ADB842;
+}
+.box{
+    box-shadow: 0px 3px 15px grey;
+    padding: 10px;
+    border-radius: 7px;
+}
+.box-style {
+    background-color: #ADB842;
+    padding: 5px 14px;
+    color: white;
+    border-radius: 8px;
+}
+.box-inverse{
+    box-shadow: 0px 3px 15px grey;
+    padding: 10px;
+    border-radius: 7px;
+	background-color: #41464b;
+	color: white;
+	border-style: solid;
+	border-color: rgb(255 0 0);
+}
+.boxTop-style{
+    box-shadow: 0px 3px 15px grey;
+    padding: 10px;
+    border-radius: 7px;								  
+    background-color: #6C757D;
+    padding: 5px 14px;
+    color: white;
+    border-radius: 8px;
+}
+
+.box-style-inverse {
+	background-color: #6c757d;
+    padding: 5px 14px;
+    color: white;
+    border-radius: 8px;
+}
+
+
+
+
+span {
+    background-color: white;
+    padding: 5px 7px;
+    border-radius: 5px;
+    color: #41464B;
+}
+.now-color h1{
+/* color: #A50D19; */
+color: red;	  
+}
+
+.box h3{
+	font-weight: bold;
+	font-size: 25px;
+}
+.relative{
+    position: relative;
+}
+
+
+.bforeTimeline::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    left: -20px;
+    background-color: #41464B;
+	   /* background-color: #212529; */
+}
+
+
+/* Blink for Webkit and others
+(Chrome, Safari, Firefox, IE, ...)
+*/
+
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+
+
+.box::before{
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    box-shadow: 0px 0px 10px #41464B;
+    left: -30px;
+    background-color: #41464B;
+    border-radius: 50%;
+}
+.box-inverse::before{
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    box-shadow: 0px 0px 10px red;
+    left: -30px;
+    background-color: red;
+    border-radius: 50%;
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+.footerAfterBefore::before{
+    content: "";
+    width: 46.8%;
+    height: 5px;
+    position: absolute;
+    left: -53px;
+    top: 39px;
+    background-color: white;
+}
+.footerAfterBefore::after{
+    content: "";
+    width: 40.8%;
+    height: 5px;
+    position: absolute;
+    right: 0px;
+    top: 39px;
+    background-color: white;
+}
+
+.blink{
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+.btn-add {
+    background-color: #ADB842 !important;
+    color:white !important;
+}
+
+.pull-right{
+    float: right;
+}
+.w-100{
+    width:100%;
+}
