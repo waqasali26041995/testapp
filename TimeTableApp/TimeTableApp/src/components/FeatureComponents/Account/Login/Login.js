@@ -8,13 +8,6 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import './Login.css';
 import { SignIn } from '../../../../service';
-import { useDispatch } from 'react-redux';
-import { Loader } from '../../../../store/loader/action/index';
-
-async function loginUser(credentials) {
-  return SignIn(credentials)
-    .then(data => data.json())
-}
 
 export default function Login() {
   const [username, setUserName] = useState();
@@ -22,36 +15,37 @@ export default function Login() {
   const [password, setPassword] = useState();
   const [validated, setValidated] = useState(false);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
-  
-  const dispatch = useDispatch();
 
   const handleSubmit = async e => {
-    dispatch(Loader(false))
     const form = document.getElementById("LoginForm");
     if (form.checkValidity() === false) {
       setValidated(true);
       return;
     }
+
     e.preventDefault();
-    const jwtToken = await loginUser({
+    SignIn({
       email: username,
       password: password
-    });
-    if (jwtToken.status != undefined) {
-      setPasswordIncorrect(true);
-      return;
-    }
-    if (jwtToken) {
-      setToken(jwtToken);
-      const { Role } = TokenInfo(jwtToken);
-      if (Role == "Admin") {
-        window.location.href = '/user/list'
-      }
-      else {
-        window.location.href = '/event/list'
-      }
-    }
-
+    })
+      .then(function (res) {
+        const jwtToken = res.data;
+        if (jwtToken) {
+          setToken(jwtToken);
+          const { Role } = TokenInfo(jwtToken);
+          if (Role == "Admin") {
+            window.location.href = '/user/list'
+          }
+          else {
+            window.location.href = '/event/list'
+          }
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          setPasswordIncorrect(true);
+        }
+      });
   }
 
   return (

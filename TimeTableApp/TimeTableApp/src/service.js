@@ -13,13 +13,15 @@ const axiosInstance = axios.create({
 });
 export const SignIn = (body) => {
 
-    return fetch(`${React_Api_Url}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    });
+    // return fetch(`${React_Api_Url}/api/auth/login`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(body)
+    // });
+
+    return axiosInstance.post('/api/auth/login',body);
 };
 
 export const GetAllEvents = () => {
