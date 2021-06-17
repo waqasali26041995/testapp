@@ -1,10 +1,10 @@
 import React from 'react';
-import '../style.css';
-import '../responsive.css';
-import '../bootstrap.min.css';
+import '../../../../Assests/css/style.css';
+import '../../../../Assests/css/responsive.css';
+import '../../../../Assests/css/bootstrap.min.css';
 import {FaSignOutAlt} from '@react-icons/all-files/fa/FaSignOutAlt';
 import {useSelector} from 'react-redux';
-import {LoggedInInfo} from '../../../account/TokenInfo';
+import {LoggedInInfo} from '../../../../AuthTokenProvider/TokenInfo';
 
 
 export default function Header(){

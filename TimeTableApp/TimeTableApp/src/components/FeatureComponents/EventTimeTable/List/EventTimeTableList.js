@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
-import CreateOrUpdateTimeTable from '../CreateOrUpdateTimeTable/CreateOrUpdateTimeTable';
+import CreateOrUpdateTimeTable from '../CreateUpdate/CreateOrUpdateTimeTable';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { useDispatch } from 'react-redux';
-import { UpdateImage, UpdateTitle } from '../../../actions/index';
+import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions/index';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable } from '../../../service';
+import { GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable } from '../../../../service';
 
 const EventTimeTableList = () => {
     const { eventId } = useParams();

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
-import CreateOrUpdateTimeTable from '../CreateOrUpdateTimeTable/CreateOrUpdateTimeTable';
+import CreateOrUpdateTimeTable from '../CreateUpdate/CreateOrUpdateTimeTable';
 import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { useDispatch } from 'react-redux';
-import { UpdateImage, UpdateTitle } from '../../../actions/index';
+import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions/index';
 import moment from 'moment'
-import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../service'
+import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../../service'
 const EventTimeTableSchedule = () => {
     const { eventId } = useParams();
     const [data, setData] = useState([]);

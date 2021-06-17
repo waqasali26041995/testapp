@@ -5,12 +5,11 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import DatePicker from 'react-date-picker';
 import axios from 'axios';
-import useToken from '../../../account/useToken';
-import TokenInfo from '../../../account/TokenInfo';
+import useToken from '../../../../AuthTokenProvider/useToken';
+import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import moment from 'moment'
 import 'moment-timezone';
-import { CreateEvent, GetEventById, UploadImage } from '../../../service'
+import { CreateEvent, GetEventById, UploadImage } from '../../../../service'
 
 function CreateOrUpdateEvent(props) {
     const { token, setToken } = useToken();

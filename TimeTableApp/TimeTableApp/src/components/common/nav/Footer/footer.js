@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../style.css';
-import '../responsive.css';
-import '../bootstrap.min.css';
+import '../../../../Assests/css/style.css';
+import '../../../../Assests/css/responsive.css';
+import '../../../../Assests/css/bootstrap.min.css';
 import moment from 'moment';
 import 'moment-timezone'
 

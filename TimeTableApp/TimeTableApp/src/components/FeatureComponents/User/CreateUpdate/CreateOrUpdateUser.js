@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import DatePicker from 'react-date-picker';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
-import {GetUserById, CreateUser} from '../../../service'
+import {GetUserById, CreateUser} from '../../../../service'
 
 function CreateOrUpdateUser(props) {
     const [value, onChange] = useState(new Date());

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, sta } from 'react';
 import { Link } from "react-router-dom";
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
-import CreateOrUpdateEvent from '../CreateOrUpdateEvent/CreateOrUpdateEvent';
+import CreateOrUpdateEvent from '../CreateUpdate/CreateOrUpdateEvent';
 import { useDispatch } from 'react-redux';
-import { UpdateImage, UpdateTitle } from '../../../actions/index';
+import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions/index';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { GetAllEvents, RemoveEvent } from '../../../service'
+import { GetAllEvents, RemoveEvent } from '../../../../service'
 
 
 function EventList() {

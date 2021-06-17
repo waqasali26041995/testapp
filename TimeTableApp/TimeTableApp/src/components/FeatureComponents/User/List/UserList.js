@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './UserList.css';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
-import CreateOrUpdateUser from '../CreateOrUpdate/CreateOrUpdateUser';
+import CreateOrUpdateUser from '../CreateUpdate/CreateOrUpdateUser';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { GetAllUsers, RemoveUser } from '../../../service'
+import { GetAllUsers, RemoveUser } from '../../../../service'
 
 function UserList() {
   const [data, setData] = useState([]);

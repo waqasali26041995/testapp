@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import TokenInfo from '../TokenInfo';
+import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import './Login.css';
-import {SignIn} from '../../service'; 
+import {SignIn} from '../../../../service'; 
 
 async function loginUser(credentials) {
   return SignIn(credentials)

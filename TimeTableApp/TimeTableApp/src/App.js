@@ -1,16 +1,16 @@
 import React from 'react';
-import EventList from './Components/EventManagement/Event/list'
-import EventTimeTableList from './Components/EventTimeTableManagement/TimeTable/EventTimeTableList'
-import EventTimeTableSchedule from './Components/EventTimeTableManagement/TimeTable/EventTimeTableSchedule'
+import EventList from './components/FeatureComponents/Event/List/list'
+import EventTimeTableList from './components/FeatureComponents/EventTimeTable/List/EventTimeTableList'
+import EventTimeTableSchedule from './components/FeatureComponents/EventTimeTable/List/EventTimeTableSchedule'
 import './App.css';
-import Login from './account/Login/Login';
-import useToken from './account/useToken';
+import Login from './components/FeatureComponents/Account/Login/Login';
+import useToken from './AuthTokenProvider/useToken';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './Components/nav/Header/header'
-import Footer from './Components/nav/Footer/footer'
+import Header from './components/common/nav/Header/header'
+import Footer from './components/common/nav/Footer/footer'
 import jwtDecode from 'jwt-decode';
-import CreateOrUpdateEvent from './Components/EventManagement/CreateOrUpdateEvent/CreateOrUpdateEvent';
-import UserList from './Components/UserManagement/UserList/UserList';
+import CreateOrUpdateEvent from './components/FeatureComponents/Event/CreateUpdate/CreateOrUpdateEvent';
+import UserList from './components/FeatureComponents/User/List/UserList';
 import 'react-notifications/lib/notifications.css';
 
 function App() {

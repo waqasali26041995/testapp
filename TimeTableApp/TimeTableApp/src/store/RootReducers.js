@@ -1,5 +1,5 @@
-import ChangeHeaderlogo from './headerlogo';
-import ChangeHeaderTitle from './UpdateHeaderTitle';
+import ChangeHeaderlogo from './UpdateHeader/reducers/headerlogo';
+import ChangeHeaderTitle from './UpdateHeader/reducers/UpdateHeaderTitle';
 import { combineReducers} from 'redux';
 
 const rootReducer = combineReducers({

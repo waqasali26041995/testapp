@@ -3,14 +3,12 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
-import DateTimePicker from 'react-datetime-picker';
-import axios from 'axios';
-import useToken from '../../../account/useToken';
+import useToken from '../../../../AuthTokenProvider/useToken';
 import TimePicker from 'react-time-picker';
 import {NotificationContainer, NotificationManager} from 'react-notifications'
 import moment from 'moment';
 import 'moment-timezone';
-import {GetEventById, CreateTimeTable, GetTimeTableById} from '../../../service';
+import {GetEventById, CreateTimeTable, GetTimeTableById} from '../../../../service';
 
 
 function CreateOrUpdateTimeTable(props) {
