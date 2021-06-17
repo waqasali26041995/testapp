@@ -54,7 +54,7 @@ function CreateOrUpdateEvent(props) {
             UserId: userId,
             ImageName: imageName
         }
-        CreateEvent(event, token)
+        CreateEvent(event)
             .then(function (res) {
                 if (!res.data) {
                     NotificationManager.error('Event with the same name already exist please use different name.', 'Event Time Table', 5000);
@@ -76,7 +76,7 @@ function CreateOrUpdateEvent(props) {
 
     useEffect(() => {
         if (props.id != undefined && props.id != null) {
-            GetEventById(props.id, token)
+            GetEventById(props.id)
                 .then(function (res) {
                     setEventName(res.data.name);
                     setEventDescription(res.data.description);
@@ -101,7 +101,7 @@ function CreateOrUpdateEvent(props) {
         form.append('FileName', e.target.files[0].name);
         setImageName(e.target.files[0].name);
 
-        UploadImage(form, token)
+        UploadImage(form)
             .then(function () {
 
             })

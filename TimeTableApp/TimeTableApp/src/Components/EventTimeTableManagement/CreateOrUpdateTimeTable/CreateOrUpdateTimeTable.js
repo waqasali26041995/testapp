@@ -28,7 +28,7 @@ function CreateOrUpdateTimeTable(props) {
             setValidated(true);
             return;
         }
-        GetEventById(props.eventId, token)
+        GetEventById(props.eventId)
             .then(function (res) {
                 const eventDate = new Date(res.data.eventDate);
 
@@ -49,7 +49,7 @@ function CreateOrUpdateTimeTable(props) {
                     CreatedDateTime: new Date(),
                     EventId: props.eventId
                 }
-                CreateTimeTable(eventTimeTable, token)
+                CreateTimeTable(eventTimeTable)
                     .then(function (res) {
                         
                         if(!res.data)
@@ -78,7 +78,7 @@ function CreateOrUpdateTimeTable(props) {
     useEffect(() => {
         console.log("Moment",moment().toLocaleString())
         if (props.id != undefined && props.id != null) {
-            GetTimeTableById(props.id, token)
+            GetTimeTableById(props.id)
                 .then(function (res) {
                     setName(res.data.name);
                     setDescription(res.data.description);

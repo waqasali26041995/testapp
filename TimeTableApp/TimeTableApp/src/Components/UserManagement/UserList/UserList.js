@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './UserList.css';
-import axios from 'axios';
-import useToken from '../../../account/useToken';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import CreateOrUpdateUser from '../CreateOrUpdate/CreateOrUpdateUser';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -9,13 +7,12 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { GetAllUsers, RemoveUser } from '../../../service'
 
 function UserList() {
-  const { token, setToken } = useToken();
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [id, setId] = useState();
 
   const getUsers = async () => {
-    GetAllUsers(token)
+    GetAllUsers()
       .then((res) => {
         setData(res.data);
       })
@@ -31,7 +28,7 @@ function UserList() {
 
 
   const removeUser = (id) => {
-    RemoveUser(id, token)
+    RemoveUser(id)
       .then(() => {
         NotificationManager.success('Deleted Successfully', 'User', 5000);
       })

@@ -4,14 +4,10 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import DatePicker from 'react-date-picker';
-import axios from 'axios';
-import useToken from '../../../account/useToken';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {GetUserById, CreateUser} from '../../../service'
 
 function CreateOrUpdateUser(props) {
-
-    const { token, setToken } = useToken();
     const [value, onChange] = useState(new Date());
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -24,10 +20,7 @@ function CreateOrUpdateUser(props) {
 
     useEffect(() => {
         if (props.id != undefined) {
-            const headers = {
-                'Authorization': `bearer ${token}`
-            }
-            GetUserById(props.id, token)
+            GetUserById(props.id)
                 .then(function (res) {
                     setFirstName(res.data.firstName);
                     setLastName(res.data.lastName);
@@ -74,10 +67,7 @@ function CreateOrUpdateUser(props) {
             CreatedDateTime: new Date(),
             IsDeleted: false
         }
-        const headers = {
-            'Authorization': `bearer ${token}`
-        }
-        CreateUser(user, token)
+        CreateUser(user)
             .then(function () {
                 props.onHide();
                 

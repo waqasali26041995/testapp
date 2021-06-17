@@ -1,10 +1,7 @@
 import React, { useState, useEffect, sta } from 'react';
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import useToken from '../../../account/useToken';
 import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import CreateOrUpdateEvent from '../CreateOrUpdateEvent/CreateOrUpdateEvent';
-import TokenInfo from '../../../account/TokenInfo'
 import { useDispatch } from 'react-redux';
 import { UpdateImage, UpdateTitle } from '../../../actions/index';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -13,14 +10,12 @@ import { GetAllEvents, RemoveEvent } from '../../../service'
 
 
 function EventList() {
-
-    const { token, setToken } = useToken();
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
 
     const getEvents = () => {
-        GetAllEvents(token)
+        GetAllEvents()
             .then((res) => {
                 setData(res.data);
             })
@@ -30,7 +25,7 @@ function EventList() {
     }
 
     const removeEvent = (id) => {
-        RemoveEvent(id, token)
+        RemoveEvent(id)
             .then(() => {
                 NotificationManager.success('Deleted Successfully', 'Event', 5000);
             })

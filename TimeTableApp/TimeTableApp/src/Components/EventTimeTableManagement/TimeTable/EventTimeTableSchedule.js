@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom";
-import axios from 'axios';
-import useToken from '../../../account/useToken';
 import CreateOrUpdateTimeTable from '../CreateOrUpdateTimeTable/CreateOrUpdateTimeTable';
 import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { useDispatch } from 'react-redux';
@@ -9,14 +7,13 @@ import { UpdateImage, UpdateTitle } from '../../../actions/index';
 import moment from 'moment'
 import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../service'
 const EventTimeTableSchedule = () => {
-    const { token, setToken } = useToken();
     const { eventId } = useParams();
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
 
     useEffect(() => {
-        GetAllScheduleTimeTablesByEventId(eventId, token)
+        GetAllScheduleTimeTablesByEventId(eventId)
             .then((res) => {
                 setData(res.data);
             })
@@ -24,7 +21,7 @@ const EventTimeTableSchedule = () => {
                 console.error(error)
             });
 
-        GetEventById(eventId, token)
+        GetEventById(eventId)
             .then((res) => {
                 dispatch(UpdateImage(`https://localhost:5001/content/${res.data.imageName}`))
                 dispatch(UpdateTitle(res.data.name))

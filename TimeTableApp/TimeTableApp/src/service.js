@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+let headers = {};
+if(localStorage.token) {
+    var jwtToken = JSON.parse(localStorage.token);
+    headers.Authorization = `bearer ${jwtToken.token}`
+}
 const React_Api_Url = process.env.REACT_App_BACKEND_URL;
-debugger;
+const axiosInstance = axios.create({
+    baseURL: React_Api_Url,
+    headers: headers
+});
 export const SignIn = (body) => {
 
     return fetch(`${React_Api_Url}/api/auth/login`, {
@@ -14,126 +22,45 @@ export const SignIn = (body) => {
     });
 };
 
-export const GetAllEvents = (token) => {
-    return axios.get(`${React_Api_Url}/Event/GetAll`, {
-        headers: {
-            'Authorization': `bearer ${token}`
-        }
-    })
+export const GetAllEvents = () => {
+    return axiosInstance.get(`/Event/GetAll`)
 };
-
-export const RemoveEvent = (id, token) => {
-    return axios.delete(`${React_Api_Url}/Event/delete/${id}`, {
-        headers: {
-            'Authorization': `bearer ${token}`
-        }
-    })
+export const GetAllUsers = () => {
+    return axiosInstance.get(`/User/GetAll`)
 };
-
-export const RemoveTimeTable = (id, token) => {
-    return axios.delete(`${React_Api_Url}/TimeTable/delete/${id}`, {
-        headers: {
-            'Authorization': `bearer ${token}`
-        }
-    })
+export const GetAllTimeTablesByEventId = (eventId) => {
+    return axiosInstance.get(`/TimeTable/GetAllByEventId/${eventId}`)
 };
-
-export const RemoveUser = (id, token) => {
-    return axios.delete(`${React_Api_Url}/User/delete/${id}`, {
-        headers: {
-            'Authorization': `bearer ${token}`
-        }
-    })
+export const GetAllScheduleTimeTablesByEventId = (eventId) => {
+    return axiosInstance.get(`/TimeTable/schedule/GetAllByEventId/${eventId}`)
 };
-
-
-export const GetAllUsers = (token) => {
-    return axios.get(`${React_Api_Url}/User/GetAll`, {
-      headers: {
-        'Authorization': `bearer ${token}`
-      }
-    })
+export const GetEventById = (eventId) => {
+    return axiosInstance.get(`/Event/GetById/${eventId}`)
 };
-
-
-export const GetAllTimeTablesByEventId = (eventId, token) => {
-    return axios.get(`${React_Api_Url}/TimeTable/GetAllByEventId/${eventId}`, {
-            headers: {
-                'Authorization': `bearer ${token}`
-            }
-        })
+export const GetUserById = (id) => {
+    return axiosInstance.get(`/User/GetById/${id}`)
 };
-
-export const GetAllScheduleTimeTablesByEventId = (eventId, token) => {
-    return axios.get(`${React_Api_Url}/TimeTable/schedule/GetAllByEventId/${eventId}`, {
-        headers: {
-            'Authorization': `bearer ${token}`
-        }
-    })
+export const GetTimeTableById = (id) => {
+    return axiosInstance.get(`/TimeTable/GetById/${id}`)
 };
-
-
-
-export const CreateEvent = (event, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.post(`${React_Api_Url}/Event/CreateOrUpdate`, event, {
-        headers: headers
-    })
+export const CreateEvent = (event) => {
+    return axiosInstance.post(`/Event/CreateOrUpdate`, event)
 };
-
-export const CreateUser = (user, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.post(`${React_Api_Url}/User/CreateOrUpdate`, user, {
-        headers: headers
-    })
+export const CreateUser = (user) => {
+    return axiosInstance.post(`/User/CreateOrUpdate`, user)
 };
-
-export const CreateTimeTable = (body, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.post(`${React_Api_Url}/TimeTable/CreateOrUpdate`, body, {
-        headers: headers
-    })
+export const CreateTimeTable = (body) => {
+    return axiosInstance.post(`/TimeTable/CreateOrUpdate`, body)
 };
-
-
-export const GetEventById = (eventId, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.get(`${React_Api_Url}/Event/GetById/${eventId}`, {
-        headers: headers
-    })
+export const RemoveEvent = (id) => {
+    return axiosInstance.delete(`/Event/delete/${id}`)
 };
-
-export const GetUserById = (id, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.get(`${React_Api_Url}/User/GetById/${id}`, {
-        headers: headers
-    })
+export const RemoveTimeTable = (id) => {
+    return axiosInstance.delete(`/TimeTable/delete/${id}`)
 };
-
-export const GetTimeTableById = (id, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.get(`${React_Api_Url}/TimeTable/GetById/${id}`, {
-        headers: headers
-    })
+export const RemoveUser = (id) => {
+    return axiosInstance.delete(`/User/delete/${id}`)
 };
-
-export const UploadImage = (form, token) => {
-    const headers = {
-        'Authorization': `bearer ${token}`
-    }
-    return axios.post(`${React_Api_Url}/Event/UploadEventImage`, form, {
-        headers: headers
-    })
+export const UploadImage = (form) => {
+    return axiosInstance.post(`/Event/UploadEventImage`, form)
 }
