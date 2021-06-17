@@ -12,6 +12,8 @@ import jwtDecode from 'jwt-decode';
 import CreateOrUpdateEvent from './components/FeatureComponents/Event/CreateUpdate/CreateOrUpdateEvent';
 import UserList from './components/FeatureComponents/User/List/UserList';
 import 'react-notifications/lib/notifications.css';
+import PrivateRoute from './components/Route/PrivateRoute';
+import PublicRoute from './components/Route/PublicRoute';
 
 function App() {
   const { token, setToken } = useToken();
@@ -23,38 +25,25 @@ function App() {
     }
   }
 
-  if (!token) {
-    return (
-      <>
-        <Header />
-        <Login setToken={setToken} />
-      </>
-    )
-  }
+  // if (!token) {
+  //   return (
+  //     <>
+  //       <Header />
+  //       <Login setToken={setToken} />
+  //     </>
+  //   )
+  // }
 
   return (
     <>
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route exact path="/event/list">
-            <EventList />
-          </Route>
-          <Route exact path="/event/timtable/list/:eventId">
-            <EventTimeTableList />
-          </Route>
-          <Route exact path="/event/createorupdate">
-            <CreateOrUpdateEvent />
-          </Route>
-          <Route exact path="/user/list">
-            <UserList />
-          </Route>
-          <Route exact path="/auth/login">
-            <Login setToken={setToken} />
-          </Route>
-          <Route exact path="/event/timtable/schedule/list/:eventId">
-            <EventTimeTableSchedule />
-          </Route>
+          <PublicRoute restricted={false} component={Login} path="/auth/login" exact />
+          <PrivateRoute component={EventList} path="/event/list" exact />
+          <PrivateRoute component={EventTimeTableList} path="/event/timtable/list/:eventId" exact />
+          <PrivateRoute component={UserList} path="/user/list" exact />
+          <PrivateRoute component={EventTimeTableSchedule} path="/event/timtable/schedule/list/:eventId" exact />
         </Switch>
         <Footer />
       </BrowserRouter>

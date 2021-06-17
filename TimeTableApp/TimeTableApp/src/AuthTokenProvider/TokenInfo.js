@@ -20,6 +20,7 @@ export default function TokenInfo({token}) {
 }
 
 export function LoggedInInfo() {
+  debugger;
   var token = localStorage.getItem('token');
   if(token) {
     return {

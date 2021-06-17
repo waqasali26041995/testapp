@@ -15,7 +15,7 @@ export default function Header(){
     const {isLoggedIn} = LoggedInInfo();
     if(isLoggedIn) {
       return <>
-      <a href="/" style={{position: "absolute", color: "white", right: "15px", top:"106px" }} onClick={() => {localStorage.removeItem('token')}}><FaSignOutAlt /> Logout</a>
+      <a href="/auth/login" style={{position: "absolute", color: "white", right: "15px", top:"106px" }} onClick={() => {localStorage.removeItem('token')}}><FaSignOutAlt /> Logout</a>
       </>
     }
     else {

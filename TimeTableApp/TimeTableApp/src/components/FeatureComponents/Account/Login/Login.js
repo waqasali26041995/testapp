@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
+import useToken from '../../../../AuthTokenProvider/useToken';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import './Login.css';
-import {SignIn} from '../../../../service'; 
+import { SignIn } from '../../../../service';
 
 async function loginUser(credentials) {
   return SignIn(credentials)
     .then(data => data.json())
 }
 
-export default function Login({ setToken }) {
+export default function Login() {
   const [username, setUserName] = useState();
+  const { token, setToken } = useToken();
   const [password, setPassword] = useState();
   const [validated, setValidated] = useState(false);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
@@ -26,26 +28,22 @@ export default function Login({ setToken }) {
       return;
     }
     e.preventDefault();
-    const token = await loginUser({
+    const jwtToken = await loginUser({
       email: username,
       password: password
     });
-    if(token.status != undefined)
-    {
+    if (jwtToken.status != undefined) {
       setPasswordIncorrect(true);
       return;
     }
-    if (token) {
-      setToken(token);
-
-      if (token) {
-        const { Role } = TokenInfo(token);
-        if (Role == "Admin") {
-          window.location.href = '/user/list'
-        }
-        else {
-          window.location.href = '/event/list'
-        }
+    if (jwtToken) {
+      setToken(jwtToken);
+      const { Role } = TokenInfo(jwtToken);
+      if (Role == "Admin") {
+        window.location.href = '/user/list'
+      }
+      else {
+        window.location.href = '/event/list'
       }
     }
 
