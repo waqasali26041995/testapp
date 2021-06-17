@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import TokenInfo from './account/TokenInfo'
 
-const localStorageToken = localStorage.getItem('token');
-let baseUrl = "";
-if(localStorageToken)
-{
-    const jwtToken = JSON.parse(localStorageToken);
-    const {Issuer} = TokenInfo(jwtToken);
-    baseUrl = Issuer;
-}
-
+const React_Api_Url = process.env.REACT_App_BACKEND_URL;
+debugger;
 export const SignIn = (body) => {
 
-    return fetch('https://localhost:5001/api/auth/login', {
+    return fetch(`${React_Api_Url}/api/auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -23,7 +15,7 @@ export const SignIn = (body) => {
 };
 
 export const GetAllEvents = (token) => {
-    return axios.get(`${baseUrl}/Event/GetAll`, {
+    return axios.get(`${React_Api_Url}/Event/GetAll`, {
         headers: {
             'Authorization': `bearer ${token}`
         }
@@ -31,7 +23,7 @@ export const GetAllEvents = (token) => {
 };
 
 export const RemoveEvent = (id, token) => {
-    return axios.delete(`${baseUrl}/Event/delete/${id}`, {
+    return axios.delete(`${React_Api_Url}/Event/delete/${id}`, {
         headers: {
             'Authorization': `bearer ${token}`
         }
@@ -39,7 +31,7 @@ export const RemoveEvent = (id, token) => {
 };
 
 export const RemoveTimeTable = (id, token) => {
-    return axios.delete(`${baseUrl}/TimeTable/delete/${id}`, {
+    return axios.delete(`${React_Api_Url}/TimeTable/delete/${id}`, {
         headers: {
             'Authorization': `bearer ${token}`
         }
@@ -47,7 +39,7 @@ export const RemoveTimeTable = (id, token) => {
 };
 
 export const RemoveUser = (id, token) => {
-    return axios.delete(`${baseUrl}/User/delete/${id}`, {
+    return axios.delete(`${React_Api_Url}/User/delete/${id}`, {
         headers: {
             'Authorization': `bearer ${token}`
         }
@@ -56,7 +48,7 @@ export const RemoveUser = (id, token) => {
 
 
 export const GetAllUsers = (token) => {
-    return axios.get(`${baseUrl}/User/GetAll`, {
+    return axios.get(`${React_Api_Url}/User/GetAll`, {
       headers: {
         'Authorization': `bearer ${token}`
       }
@@ -65,7 +57,7 @@ export const GetAllUsers = (token) => {
 
 
 export const GetAllTimeTablesByEventId = (eventId, token) => {
-    return axios.get(`${baseUrl}/TimeTable/GetAllByEventId/${eventId}`, {
+    return axios.get(`${React_Api_Url}/TimeTable/GetAllByEventId/${eventId}`, {
             headers: {
                 'Authorization': `bearer ${token}`
             }
@@ -73,7 +65,7 @@ export const GetAllTimeTablesByEventId = (eventId, token) => {
 };
 
 export const GetAllScheduleTimeTablesByEventId = (eventId, token) => {
-    return axios.get(`${baseUrl}/TimeTable/schedule/GetAllByEventId/${eventId}`, {
+    return axios.get(`${React_Api_Url}/TimeTable/schedule/GetAllByEventId/${eventId}`, {
         headers: {
             'Authorization': `bearer ${token}`
         }
@@ -86,7 +78,7 @@ export const CreateEvent = (event, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.post(`${baseUrl}/Event/CreateOrUpdate`, event, {
+    return axios.post(`${React_Api_Url}/Event/CreateOrUpdate`, event, {
         headers: headers
     })
 };
@@ -95,7 +87,7 @@ export const CreateUser = (user, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.post(`${baseUrl}/User/CreateOrUpdate`, user, {
+    return axios.post(`${React_Api_Url}/User/CreateOrUpdate`, user, {
         headers: headers
     })
 };
@@ -104,7 +96,7 @@ export const CreateTimeTable = (body, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.post(`${baseUrl}/TimeTable/CreateOrUpdate`, body, {
+    return axios.post(`${React_Api_Url}/TimeTable/CreateOrUpdate`, body, {
         headers: headers
     })
 };
@@ -114,7 +106,7 @@ export const GetEventById = (eventId, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.get(`${baseUrl}/Event/GetById/${eventId}`, {
+    return axios.get(`${React_Api_Url}/Event/GetById/${eventId}`, {
         headers: headers
     })
 };
@@ -123,7 +115,7 @@ export const GetUserById = (id, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.get(`${baseUrl}/User/GetById/${id}`, {
+    return axios.get(`${React_Api_Url}/User/GetById/${id}`, {
         headers: headers
     })
 };
@@ -132,7 +124,7 @@ export const GetTimeTableById = (id, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.get(`${baseUrl}/TimeTable/GetById/${id}`, {
+    return axios.get(`${React_Api_Url}/TimeTable/GetById/${id}`, {
         headers: headers
     })
 };
@@ -141,7 +133,7 @@ export const UploadImage = (form, token) => {
     const headers = {
         'Authorization': `bearer ${token}`
     }
-    return axios.post(`${baseUrl}/Event/UploadEventImage`, form, {
+    return axios.post(`${React_Api_Url}/Event/UploadEventImage`, form, {
         headers: headers
     })
 }
