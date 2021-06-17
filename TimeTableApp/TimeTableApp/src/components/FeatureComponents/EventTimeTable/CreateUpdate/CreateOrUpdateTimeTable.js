@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import useToken from '../../../../AuthTokenProvider/useToken';
 import TimePicker from 'react-time-picker';
-import {NotificationContainer, NotificationManager} from 'react-notifications'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
 import moment from 'moment';
 import 'moment-timezone';
-import {GetEventById, CreateTimeTable, GetTimeTableById} from '../../../../service';
+import { GetEventById, CreateTimeTable, GetTimeTableById } from '../../../../service';
+import { useDispatch } from 'react-redux';
+import { Loader } from '../../../../store/loader/action/index';
 
 
 function CreateOrUpdateTimeTable(props) {
@@ -18,9 +20,11 @@ function CreateOrUpdateTimeTable(props) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [validated, setValidated] = useState(false);
+    const dispatch = useDispatch();
 
 
     const saveEventTimeTable = () => {
+        dispatch(Loader(false));
         const form = document.getElementById("CreateOrUpdateTimeTableForm");
         if (form.checkValidity() === false) {
             setValidated(true);
@@ -49,22 +53,22 @@ function CreateOrUpdateTimeTable(props) {
                 }
                 CreateTimeTable(eventTimeTable)
                     .then(function (res) {
-                        
-                        if(!res.data)
-                        {
-                            NotificationManager.error('Start Time and End Time should be greater than current time and End Time should also greater than Start Time.', 'Event Time Table',5000);
+                        dispatch(Loader(true));
+                        if (!res.data) {
+                            NotificationManager.error('Start Time and End Time should be greater than current time and End Time should also greater than Start Time.', 'Event Time Table', 5000);
                             return;
                         }
                         props.onHide();
-                        
-                if (props.id != undefined && props.id != null) {
-                    NotificationManager.success('Updated Successfully', 'Event Time Table',5000);
-                }
-                else {
-                    NotificationManager.success('Created Successfully', 'Event Time Table',5000);
-                }
+
+                        if (props.id != undefined && props.id != null) {
+                            NotificationManager.success('Updated Successfully', 'Event Time Table', 5000);
+                        }
+                        else {
+                            NotificationManager.success('Created Successfully', 'Event Time Table', 5000);
+                        }
                     })
                     .catch(function (error) {
+                        dispatch(Loader(true));
                         console.log(error);
                     });
             })
@@ -74,7 +78,7 @@ function CreateOrUpdateTimeTable(props) {
     }
 
     useEffect(() => {
-        console.log("Moment",moment().toLocaleString())
+        console.log("Moment", moment().toLocaleString())
         if (props.id != undefined && props.id != null) {
             GetTimeTableById(props.id)
                 .then(function (res) {

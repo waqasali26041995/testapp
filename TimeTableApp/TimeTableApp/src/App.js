@@ -14,6 +14,7 @@ import UserList from './components/FeatureComponents/User/List/UserList';
 import 'react-notifications/lib/notifications.css';
 import PrivateRoute from './components/Route/PrivateRoute';
 import PublicRoute from './components/Route/PublicRoute';
+import AppLoader from './components/common/Loader/loader';
 
 function App() {
   const { token, setToken } = useToken();
@@ -25,19 +26,11 @@ function App() {
     }
   }
 
-  // if (!token) {
-  //   return (
-  //     <>
-  //       <Header />
-  //       <Login setToken={setToken} />
-  //     </>
-  //   )
-  // }
-
   return (
     <>
       <BrowserRouter>
         <Header />
+      <AppLoader />
         <Switch>
           <PublicRoute restricted={false} component={Login} path="/auth/login" exact />
           <PrivateRoute component={EventList} path="/event/list" exact />

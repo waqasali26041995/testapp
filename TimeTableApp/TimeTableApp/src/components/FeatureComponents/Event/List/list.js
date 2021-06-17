@@ -7,12 +7,14 @@ import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { GetAllEvents, RemoveEvent } from '../../../../service'
+import { Loader } from '../../../../store/loader/action/index';
 
 
 function EventList() {
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
+    const dispatch = useDispatch();
 
     const getEvents = () => {
         GetAllEvents()
@@ -25,16 +27,18 @@ function EventList() {
     }
 
     const removeEvent = (id) => {
+        dispatch(Loader(false));
         RemoveEvent(id)
             .then(() => {
+                dispatch(Loader(true));
                 NotificationManager.success('Deleted Successfully', 'Event', 5000);
             })
             .catch((error) => {
+                dispatch(Loader(true));
                 console.error(error)
             });
     }
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(UpdateImage("/logo.png"));

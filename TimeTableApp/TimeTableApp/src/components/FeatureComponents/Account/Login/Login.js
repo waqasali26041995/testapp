@@ -8,6 +8,8 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import './Login.css';
 import { SignIn } from '../../../../service';
+import { useDispatch } from 'react-redux';
+import { Loader } from '../../../../store/loader/action/index';
 
 async function loginUser(credentials) {
   return SignIn(credentials)
@@ -20,8 +22,11 @@ export default function Login() {
   const [password, setPassword] = useState();
   const [validated, setValidated] = useState(false);
   const [passwordIncorrect, setPasswordIncorrect] = useState(false);
+  
+  const dispatch = useDispatch();
 
   const handleSubmit = async e => {
+    dispatch(Loader(false))
     const form = document.getElementById("LoginForm");
     if (form.checkValidity() === false) {
       setValidated(true);

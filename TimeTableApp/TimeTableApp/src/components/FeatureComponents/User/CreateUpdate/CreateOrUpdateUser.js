@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col'
 import DatePicker from 'react-date-picker';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {GetUserById, CreateUser} from '../../../../service'
+import { useDispatch } from 'react-redux';
+import { Loader } from '../../../../store/loader/action/index';
 
 function CreateOrUpdateUser(props) {
     const [value, onChange] = useState(new Date());
@@ -16,6 +18,7 @@ function CreateOrUpdateUser(props) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [validated, setValidated] = useState(false);
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -45,6 +48,7 @@ function CreateOrUpdateUser(props) {
     }, [props.id]);
 
     const saveUser = () => {
+        dispatch(Loader(false))
         const form = document.getElementById("CreateOrUpdateUserForm");
         if (form.checkValidity() === false) {
             setValidated(true);
@@ -70,6 +74,7 @@ function CreateOrUpdateUser(props) {
         CreateUser(user)
             .then(function () {
                 props.onHide();
+                dispatch(Loader(true))
                 
                 if (props.id != undefined && props.id != null) {
                     NotificationManager.success('Updated Successfully', 'User',5000);
@@ -79,6 +84,7 @@ function CreateOrUpdateUser(props) {
                 }
             })
             .catch(function (error) {
+                dispatch(Loader(true));
                 console.log(error);
             });
 

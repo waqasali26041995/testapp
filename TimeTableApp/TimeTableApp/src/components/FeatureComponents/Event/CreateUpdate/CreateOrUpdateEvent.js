@@ -10,6 +10,8 @@ import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'moment-timezone';
 import { CreateEvent, GetEventById, UploadImage } from '../../../../service'
+import { useDispatch } from 'react-redux';
+import { Loader } from '../../../../store/loader/action/index';
 
 function CreateOrUpdateEvent(props) {
     const { token, setToken } = useToken();
@@ -18,7 +20,7 @@ function CreateOrUpdateEvent(props) {
     const [description, setDescription] = useState('');
     const [validated, setValidated] = useState(false);
     const [imageName, setImageName] = useState("");
-
+    const dispatch = useDispatch();
 
 
 
@@ -36,6 +38,7 @@ function CreateOrUpdateEvent(props) {
     }
 
     const saveEvent = () => {
+        dispatch(Loader(false));
         const form = document.getElementById("CreateOrUpdateEventForm");
         if (form.checkValidity() === false) {
             setValidated(true);
@@ -55,6 +58,7 @@ function CreateOrUpdateEvent(props) {
         }
         CreateEvent(event)
             .then(function (res) {
+                dispatch(Loader(true));
                 if (!res.data) {
                     NotificationManager.error('Event with the same name already exist please use different name.', 'Event Time Table', 5000);
                     return;
@@ -68,6 +72,7 @@ function CreateOrUpdateEvent(props) {
                 }
             })
             .catch(function (error) {
+                dispatch(Loader(true));
                 console.log(error);
             });
     }

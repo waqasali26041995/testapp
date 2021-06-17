@@ -8,6 +8,7 @@ import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable } from '../../../../service';
+import { Loader } from '../../../../store/loader/action/index';
 
 const EventTimeTableList = () => {
     const { eventId } = useParams();
@@ -38,11 +39,14 @@ const EventTimeTableList = () => {
 
 
     const removeEventTimeTable = (id) => {
+        dispatch(Loader(false));
         RemoveTimeTable(id)
             .then(() => {
+                dispatch(Loader(true));
                 NotificationManager.success('Deleted Successfully', 'Event Time Table', 5000);
             })
             .catch((error) => {
+                dispatch(Loader(true));
                 console.error(error)
             });
     }

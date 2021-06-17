@@ -5,11 +5,14 @@ import CreateOrUpdateUser from '../CreateUpdate/CreateOrUpdateUser';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { GetAllUsers, RemoveUser } from '../../../../service'
+import { useDispatch } from 'react-redux';
+import { Loader } from '../../../../store/loader/action/index';
 
 function UserList() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [id, setId] = useState();
+  const dispatch = useDispatch();
 
   const getUsers = async () => {
     GetAllUsers()
@@ -28,11 +31,14 @@ function UserList() {
 
 
   const removeUser = (id) => {
+    dispatch(Loader(false));
     RemoveUser(id)
       .then(() => {
+        dispatch(Loader(true));
         NotificationManager.success('Deleted Successfully', 'User', 5000);
       })
       .catch((error) => {
+        dispatch(Loader(true));
         console.error(error)
       });
   }
