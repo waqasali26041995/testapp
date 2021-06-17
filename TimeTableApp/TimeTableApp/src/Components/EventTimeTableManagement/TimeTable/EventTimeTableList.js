@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { UpdateImage, UpdateTitle } from '../../../actions/index';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import {GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable} from '../../../service';
+import { GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable } from '../../../service';
 
 const EventTimeTableList = () => {
     const { token, setToken } = useToken();
@@ -89,53 +89,35 @@ const EventTimeTableList = () => {
         </div>
     }
     );
-    if (data.length > 0) {
-        return (
-            <>
-                <section>
-                    <label className="w-100">
-                        <Link to="/event/list">
-                            <button className="btn btn-add pull-left" style={{ margin: "20px" }}><FaArrowLeft /> Back</button>
-                        </Link>
-                        <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
-                    </label>
-                    <div className="container relative">
+    return (
+        <>
+            <section>
+                <label className="w-100">
+                    <Link to="/event/list">
+                        <button className="btn btn-add pull-left" style={{ margin: "20px" }}><FaArrowLeft /> Back</button>
+                    </Link>
+                    <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
+                </label>
+                {data.length > 0
+                    ? <div className="container relative">
                         <div className="bforeTimeline">
                             {listItems}
                         </div>
                     </div>
-                </section>
-                <CreateOrUpdateTimeTable
-                    show={show}
-                    id={id}
-                    eventId={eventId}
-                    onHide={() => setShow(false)} />
-
-                <NotificationContainer />
-            </>
-        )
-    }
-    else {
-        return (
-            <>
-                <section>
-                    <label className="w-100">
-                        <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
-                    </label>
-                    <div className="bforeTimeline" style={{ textAlign: "center", margin: "23px" }}>
+                    : <div className="bforeTimeline" style={{ textAlign: "center", margin: "23px" }}>
                         <h3>No record found</h3>
                     </div>
-                </section>
-                <CreateOrUpdateTimeTable
-                    show={show}
-                    id={id}
-                    eventId={eventId}
-                    onHide={() => setShow(false)} />
+                }
+            </section>
+            <CreateOrUpdateTimeTable
+                show={show}
+                id={id}
+                eventId={eventId}
+                onHide={() => setShow(false)} />
 
-                <NotificationContainer />
-            </>
-        )
-    }
+            <NotificationContainer />
+        </>
+    )
 }
 
 export default EventTimeTableList;
