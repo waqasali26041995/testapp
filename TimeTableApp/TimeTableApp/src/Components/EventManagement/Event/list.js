@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { UpdateImage, UpdateTitle } from '../../../actions/index';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import {GetAllEvents, RemoveEvent} from '../../../service'
+import { GetAllEvents, RemoveEvent } from '../../../service'
 
 
 function EventList() {
@@ -82,44 +82,31 @@ function EventList() {
     }
     );
 
-    if (data.length > 0) {
-        return (
-            <>
-                <section>
-                    <label className="w-100">
-                        <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
-                    </label>
+    return (
+        <>
+            <section>
+                <label className="w-100">
+                    <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
+                </label>
+                {data.length > 0
+                    ?
                     <div className="bforeTimeline">
                         {listItems}
                     </div>
-                </section>
-                <CreateOrUpdateEvent
-                    show={show}
-                    id={id}
-                    onHide={() => setShow(false)} />
-
-                <NotificationContainer />
-            </>
-        )
-    }
-    else {
-        return (
-            <>
-                <section>
-                    <label className="w-100">
-                        <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
-                    </label>
+                    :
                     <div className="bforeTimeline" style={{ textAlign: "center", margin: "23px" }}>
                         <h3>No record found</h3>
                     </div>
-                </section>
-                <CreateOrUpdateEvent
-                    show={show}
-                    id={id}
-                    onHide={() => setShow(false)} />
-            </>
-        )
-    }
+                }
+            </section>
+            <CreateOrUpdateEvent
+                show={show}
+                id={id}
+                onHide={() => setShow(false)} />
+
+            <NotificationContainer />
+        </>
+    )
 };
 
 export default React.memo(EventList);

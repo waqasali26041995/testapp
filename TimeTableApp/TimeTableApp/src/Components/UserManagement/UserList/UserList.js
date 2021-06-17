@@ -6,7 +6,7 @@ import { FaPlus } from '@react-icons/all-files/fa/FaPlus';
 import CreateOrUpdateUser from '../CreateOrUpdate/CreateOrUpdateUser';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import {GetAllUsers, RemoveUser} from '../../../service'
+import { GetAllUsers, RemoveUser } from '../../../service'
 
 function UserList() {
   const { token, setToken } = useToken();
@@ -32,13 +32,13 @@ function UserList() {
 
   const removeUser = (id) => {
     RemoveUser(id, token)
-        .then(() => {
-            NotificationManager.success('Deleted Successfully', 'User', 5000);
-        })
-        .catch((error) => {
-            console.error(error)
-        });
-}
+      .then(() => {
+        NotificationManager.success('Deleted Successfully', 'User', 5000);
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+  }
 
 
   const listItems = data.map((user) => {
@@ -50,17 +50,17 @@ function UserList() {
       </div>
       <div className="ms-auto text-danger">
         {/* <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(user.id) }} style={{ margin: "20px" }}>Edit</button> */}
-        
+
         <Dropdown>
-                    <Dropdown.Toggle style={{ backgroundColor: "#ADB842" }} variant="success" id="dropdown-basic">
-                        Actions
+          <Dropdown.Toggle style={{ backgroundColor: "#ADB842" }} variant="success" id="dropdown-basic">
+            Actions
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => { setShow(true); setId(user.id) }}>Edit</Dropdown.Item>
-                        <Dropdown.Item onClick={() => { removeUser(user.id) }}>Delete</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => { setShow(true); setId(user.id) }}>Edit</Dropdown.Item>
+            <Dropdown.Item onClick={() => { removeUser(user.id) }}>Delete</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     </div>
   }
@@ -71,9 +71,17 @@ function UserList() {
         <label className="w-100">
           <button className="btn btn-add pull-right" onClick={() => { setShow(true); setId(null) }} style={{ margin: "20px" }}><FaPlus /> Add</button>
         </label>
-        <div className="bforeTimeline">
-          {listItems}
-        </div>
+        {data.length > 0
+          ?
+          <div className="bforeTimeline">
+            {listItems}
+          </div>
+          :
+          <div className="bforeTimeline" style={{ textAlign: "center", margin: "23px" }}>
+            <h3>No record found</h3>
+          </div>
+        }
+
       </section>
       <CreateOrUpdateUser
         show={show}
