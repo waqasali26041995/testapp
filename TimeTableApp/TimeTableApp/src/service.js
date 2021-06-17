@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Logout from './components/FeatureComponents/Account/Logout/logout';
 
 let headers = {};
-if(localStorage.token) {
+if (localStorage.token) {
     var jwtToken = JSON.parse(localStorage.token);
     headers.Authorization = `bearer ${jwtToken.token}`
 }
@@ -12,18 +13,8 @@ const axiosInstance = axios.create({
     headers: headers
 });
 export const SignIn = (body) => {
-
-    // return fetch(`${React_Api_Url}/api/auth/login`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(body)
-    // });
-
-    return axiosInstance.post('/api/auth/login',body);
+    return axiosInstance.post('/api/auth/login', body);
 };
-
 export const GetAllEvents = () => {
     return axiosInstance.get(`/Event/GetAll`)
 };
@@ -66,3 +57,19 @@ export const RemoveUser = (id) => {
 export const UploadImage = (form) => {
     return axiosInstance.post(`/Event/UploadEventImage`, form)
 }
+export const responseSuccessHandler = response => {
+    Logout(0)
+    return response;
+};
+
+function responseErrorHandler(error) {
+    if (error.response.status === 401) {
+        Logout(error.response.status)
+    }
+    return Promise.reject(error);
+}
+
+axiosInstance.interceptors.response.use(
+    response => responseSuccessHandler(response),
+    error => responseErrorHandler(error)
+);

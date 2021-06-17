@@ -17,15 +17,6 @@ import PublicRoute from './components/Route/PublicRoute';
 import AppLoader from './components/common/Loader/loader';
 
 function App() {
-  const { token, setToken } = useToken();
-  if (token) {
-    const { exp } = jwtDecode(token)
-    const expirationTime = (exp * 1000) - 60000
-    if (Date.now() >= expirationTime) {
-      localStorage.removeItem('token');
-    }
-  }
-
   return (
     <>
       <BrowserRouter>
