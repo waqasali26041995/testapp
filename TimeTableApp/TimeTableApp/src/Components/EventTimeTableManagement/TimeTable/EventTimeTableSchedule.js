@@ -7,7 +7,7 @@ import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { useDispatch } from 'react-redux';
 import { UpdateImage, UpdateTitle } from '../../../actions/index';
 import moment from 'moment'
-import {GetAllScheduleTimeTablesByEventId, GetEventById} from '../../../service'
+import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../service'
 const EventTimeTableSchedule = () => {
     const { token, setToken } = useToken();
     const { eventId } = useParams();
@@ -24,7 +24,7 @@ const EventTimeTableSchedule = () => {
                 console.error(error)
             });
 
-            GetEventById(eventId, token)
+        GetEventById(eventId, token)
             .then((res) => {
                 dispatch(UpdateImage(`https://localhost:5001/content/${res.data.imageName}`))
                 dispatch(UpdateTitle(res.data.name))
@@ -62,7 +62,7 @@ const EventTimeTableSchedule = () => {
         var statusElement = document.getElementById("status-" + id + "");
         var mainElement = document.getElementById("main-" + id + "");
         var timeElement = document.getElementById("time-" + id + "");
-        
+
         if (mainElement && mainElement.classList && mainElement.classList.length > 0) {
             mainElement.classList.remove("box-inverse");
             mainElement.classList.add("box");
@@ -106,9 +106,9 @@ const EventTimeTableSchedule = () => {
             index += 1;
         }
 
-        if(index < data.length) {
+        if (index < data.length) {
             const startTime = moment(data[index].startTime).format("hh:mm:ss");
-            if(startTime > currTime)
+            if (startTime > currTime)
                 makeTimeTableAsNext(data[index].id, true);
         }
     }
@@ -136,40 +136,30 @@ const EventTimeTableSchedule = () => {
         </div>
     }
     );
-    if (data.length > 0) {
-        return (
-            <>
-                <section>
+    return (
+        <>
+            <section>
+                {data.length > 0
+                    ?
                     <div className="container relative">
                         <div className="bforeTimeline">
                             {listItems}
                         </div>
                     </div>
-                </section>
-                <CreateOrUpdateTimeTable
-                    show={show}
-                    id={id}
-                    eventId={eventId}
-                    onHide={() => setShow(false)} />
-            </>
-        )
-    }
-    else {
-        return (
-            <>
-                <section>
+                    :
                     <div className="bforeTimeline" style={{ textAlign: "center", margin: "23px" }}>
                         <h3>No record found</h3>
                     </div>
-                </section>
-                <CreateOrUpdateTimeTable
-                    show={show}
-                    id={id}
-                    eventId={eventId}
-                    onHide={() => setShow(false)} />
-            </>
-        )
-    }
+                }
+            </section>
+            <CreateOrUpdateTimeTable
+                show={show}
+                id={id}
+                eventId={eventId}
+                onHide={() => setShow(false)} />
+        </>
+    )
+
 }
 
 export default EventTimeTableSchedule;
