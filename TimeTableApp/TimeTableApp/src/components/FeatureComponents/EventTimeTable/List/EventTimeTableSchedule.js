@@ -5,12 +5,14 @@ import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { useDispatch } from 'react-redux';
 import { UpdateImage, UpdateTitle } from '../../../../store/UpdateHeader/actions/index';
 import moment from 'moment'
-import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../../service'
+import { GetAllScheduleTimeTablesByEventId, GetEventById } from '../../../../service';
+import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 const EventTimeTableSchedule = () => {
     const { eventId } = useParams();
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
+    const { Issuer } = TokenInfo();
 
     useEffect(() => {
         GetAllScheduleTimeTablesByEventId(eventId)
@@ -23,14 +25,19 @@ const EventTimeTableSchedule = () => {
 
         GetEventById(eventId)
             .then((res) => {
-                dispatch(UpdateImage(`https://localhost:5001/content/${res.data.imageName}`))
+                dispatch(UpdateImage(`${Issuer}/content/${res.data.imageName}`))
                 dispatch(UpdateTitle(res.data.name))
             })
             .catch((error) => {
                 console.error(error)
             });
 
-        setInterval(checkTime, 1000);
+        checkTime();
+        const interval = setInterval(() => {
+            checkTime()
+        }, 1000)
+
+        return () => clearInterval(interval)
     })
 
     const makeTimeTableAsStarted = (id) => {

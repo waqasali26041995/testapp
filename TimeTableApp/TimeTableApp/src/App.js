@@ -24,10 +24,10 @@ function App() {
       <AppLoader />
         <Switch>
           <PublicRoute restricted={false} component={Login} path="/auth/login" exact />
-          <PrivateRoute component={EventList} path="/event/list" exact />
-          <PrivateRoute component={EventTimeTableList} path="/event/timtable/list/:eventId" exact />
-          <PrivateRoute component={UserList} path="/user/list" exact />
-          <PrivateRoute component={EventTimeTableSchedule} path="/event/timtable/schedule/list/:eventId" exact />
+          <PrivateRoute component={EventList} roles={["User"]} path="/event/list" exact />
+          <PrivateRoute component={EventTimeTableList} roles={["User"]} path="/event/timtable/list/:eventId" exact />
+          <PrivateRoute component={UserList} roles={["Admin"]} path="/user/list" exact />
+          <PrivateRoute component={EventTimeTableSchedule} roles={["User"]} path="/event/timtable/schedule/list/:eventId" exact />
         </Switch>
         <Footer />
       </BrowserRouter>

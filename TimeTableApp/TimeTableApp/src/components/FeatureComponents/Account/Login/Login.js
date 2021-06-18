@@ -33,7 +33,7 @@ export default function Login() {
         const jwtToken = res.data;
         if (jwtToken) {
           setToken(jwtToken);
-          const { Role } = TokenInfo(jwtToken);
+          const { Role } = TokenInfo();
           if (Role == "Admin") {
             window.location.href = '/user/list'
           }

@@ -8,6 +8,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { GetAllEvents, RemoveEvent } from '../../../../service'
 import { Loader } from '../../../../store/loader/action/index';
+import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 
 
 function EventList() {
@@ -15,6 +16,7 @@ function EventList() {
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
     const dispatch = useDispatch();
+    const {Issuer} = TokenInfo();
 
     const getEvents = () => {
         GetAllEvents()
@@ -51,7 +53,7 @@ function EventList() {
         const formattedDate = `${tempDate[2]}-${tempDate[1]}-${tempDate[3]}`;
         return <div className="box d-flex align-items-center my-3">
             <div className="box-style">
-                <img style={{ width: "200px" }} src={`https://localhost:5001/content/${event.imageName}`} />
+                <img style={{ width: "200px" }} src={`${Issuer}/content/${event.imageName}`} />
             </div>
             <div className="ms-3">
                 <Link to={`/event/timtable/list/${event.id}`} style={{ textDecoration: "none", color: "black" }}>

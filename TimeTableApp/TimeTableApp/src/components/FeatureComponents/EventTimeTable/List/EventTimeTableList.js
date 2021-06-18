@@ -9,12 +9,14 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { GetAllTimeTablesByEventId, GetEventById, RemoveTimeTable } from '../../../../service';
 import { Loader } from '../../../../store/loader/action/index';
+import TokenInfo from '../../../../AuthTokenProvider/TokenInfo';
 
 const EventTimeTableList = () => {
     const { eventId } = useParams();
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
+    const {Issuer} = TokenInfo();
 
     const getEventTimeTable = async () => {
         GetAllTimeTablesByEventId(eventId)
@@ -29,7 +31,7 @@ const EventTimeTableList = () => {
     const getEventById = async () => {
         GetEventById(eventId)
             .then((res) => {
-                dispatch(UpdateImage(`https://localhost:5001/content/${res.data.imageName}`))
+                dispatch(UpdateImage(`${Issuer}/content/${res.data.imageName}`))
                 dispatch(UpdateTitle(res.data.name))
             })
             .catch((error) => {

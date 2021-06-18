@@ -45,7 +45,7 @@ function CreateOrUpdateEvent(props) {
             return;
         }
 
-        const { userId } = TokenInfo({ token });
+        const { userId } = TokenInfo();
         var event = {
             Id: props.id,
             Name: name,

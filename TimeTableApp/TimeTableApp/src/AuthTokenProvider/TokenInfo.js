@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import jwtDecode from 'jwt-decode';
 
-export default function TokenInfo({token}) {
-  if(token) {
-    const { UserId, Role, iss } = jwtDecode(token);
-    return {
-      userId: UserId,
-      Role: Role,
-      Issuer: iss
+export default function TokenInfo() {
+  if(localStorage.token) {
+    const token = JSON.parse(localStorage.token);
+    if(token) {
+      const { UserId, Role, iss } = jwtDecode(token.token);
+      return {
+        userId: UserId,
+        Role: Role,
+        Issuer: iss
+      }
     }
   }
   else {
@@ -17,7 +20,7 @@ export default function TokenInfo({token}) {
       Issuer: null
     }
   }
-}
+  }
 
 export function LoggedInInfo() {
   var token = localStorage.getItem('token');
