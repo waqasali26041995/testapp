@@ -51,12 +51,14 @@ function CreateOrUpdateUser(props) {
         dispatch(Loader(false))
         const form = document.getElementById("CreateOrUpdateUserForm");
         if (form.checkValidity() === false) {
+            dispatch(Loader(true))
             setValidated(true);
             return;
         }
 
         if(password != confirmPassword)
         {
+            dispatch(Loader(true))
             NotificationManager.error('Confirm Password and password not matched', 'Error',5000);
             return;
         }

@@ -13,11 +13,16 @@ const EventTimeTableSchedule = () => {
     const [show, setShow] = useState(false);
     const [id, setId] = useState();
     const { Issuer } = TokenInfo();
+    const [html, setHtml] = useState();
+    const dispatch = useDispatch();
+
+    const listItems = {html: []};
 
     useEffect(() => {
         GetAllScheduleTimeTablesByEventId(eventId)
             .then((res) => {
                 setData(res.data);
+                createListElements();
             })
             .catch((error) => {
                 console.error(error)
@@ -31,115 +36,70 @@ const EventTimeTableSchedule = () => {
             .catch((error) => {
                 console.error(error)
             });
-
-        checkTime();
-        const interval = setInterval(() => {
-            checkTime()
-        }, 1000)
-
-        return () => clearInterval(interval)
     })
-
-    const makeTimeTableAsStarted = (id) => {
-        var statusElement = document.getElementById("status-" + id + "");
-        var mainElement = document.getElementById("main-" + id + "");
-        var timeElement = document.getElementById("time-" + id + "");
-
-        if (mainElement && mainElement.classList && mainElement.classList.length > 0) {
-            mainElement.classList.remove("box");
-            mainElement.classList.add("box-inverse");
-        }
-
-        if (timeElement && timeElement.classList && timeElement.classList.length > 0) {
-            timeElement.classList.remove("box-style");
-            timeElement.classList.add("box-style-inverse");
-        }
-
-        if (statusElement && statusElement.classList && statusElement.classList.length > 0) {
-            statusElement.classList.remove("text-danger");
-            statusElement.classList.add("now-color");
-            statusElement.innerHTML = "<h1>Now</h1>";
-        }
-    }
-
-    const makeTimeTableAsNext = (id, isNext) => {
-        var statusElement = document.getElementById("status-" + id + "");
-        var mainElement = document.getElementById("main-" + id + "");
-        var timeElement = document.getElementById("time-" + id + "");
-
-        if (mainElement && mainElement.classList && mainElement.classList.length > 0) {
-            mainElement.classList.remove("box-inverse");
-            mainElement.classList.add("box");
-        }
-
-        if (timeElement && timeElement.classList && timeElement.classList.length > 0) {
-            timeElement.classList.remove("box-style-inverse");
-            timeElement.classList.add("box-style");
-        }
-
-        if (statusElement && statusElement.classList && statusElement.classList.length > 0) {
-            statusElement.classList.remove("now-color");
-            statusElement.classList.add("text-danger");
-            if (isNext) {
-                statusElement.innerHTML = "<h3>Next</h3>";
-            }
-            else {
-                statusElement.innerHTML = "<h3></h3>";
-            }
-        }
-    }
-    const checkTime = () => {
-        let currTime = moment().format("hh:mm:ss");
-
-        let index = 0;
+    const createListElements = () => {
         let isActiveTimeTable = false;
+        var createHtml = data.map((eventTimeTable) => {
+            const startTime = new Date(eventTimeTable.startTime).toString().split(' ');
+            const endTime = new Date(eventTimeTable.endTime).toString().split(' ');
+            const startTimeFormatted = `${startTime[4].split(":")[0]}:${startTime[4].split(":")[1]}`;
+            const endTimeFormatted = `${endTime[4].split(":")[0]}:${endTime[4].split(":")[1]}`;
 
-        for (let i = 0; i < data.length; i++) {
-            const startTime = moment(data[i].startTime).format("hh:mm:ss");
-            const endTime = moment(data[i].endTime).format("hh:mm:ss");
-            if (currTime >= startTime && currTime < endTime) {
-                index = i;
+
+            let currTime = moment().format("hh:mm:ss");
+            const timeTableStartTime = moment(eventTimeTable.startTime).format("hh:mm:ss");
+            const timeTableEndTime = moment(eventTimeTable.endTime).format("hh:mm:ss");
+            if (currTime >= timeTableStartTime && currTime < timeTableEndTime) {
                 isActiveTimeTable = true;
-                makeTimeTableAsStarted(data[i].id);
+                return <div className="box-inverse d-flex align-items-center my-3" id={`main-${eventTimeTable.id}`}>
+                    <div className="box-style-inverse" id={`time-${eventTimeTable.id}`}>
+                        <h2>{startTimeFormatted}</h2>
+                        <h5>-{endTimeFormatted}</h5>
+                    </div>
+                    <div className="ms-3">
+                        <h3>{eventTimeTable.name}</h3>
+                        <h6>{eventTimeTable.description}</h6>
+                    </div>
+                    <div class="ms-auto now-color" id={`status-${eventTimeTable.id}`}>
+                        <h1>Now</h1>
+                    </div>
+                </div>
+            }
+            else if (isActiveTimeTable) {
+                isActiveTimeTable = false;
+                return <div className="box d-flex align-items-center my-3" id={`main-${eventTimeTable.id}`}>
+                    <div className="box-style" id={`time-${eventTimeTable.id}`}>
+                        <h2>{startTimeFormatted}</h2>
+                        <h5>-{endTimeFormatted}</h5>
+                    </div>
+                    <div className="ms-3">
+                        <h3>{eventTimeTable.name}</h3>
+                        <h6>{eventTimeTable.description}</h6>
+                    </div>
+                    <div class="ms-auto text-danger" id={`status-${eventTimeTable.id}`}>
+                        <h3>Next</h3>
+                    </div>
+                </div>
             }
             else {
-                makeTimeTableAsNext(data[i].id, false);
+                return <div className="box d-flex align-items-center my-3" id={`main-${eventTimeTable.id}`}>
+                    <div className="box-style" id={`time-${eventTimeTable.id}`}>
+                        <h2>{startTimeFormatted}</h2>
+                        <h5>-{endTimeFormatted}</h5>
+                    </div>
+                    <div className="ms-3">
+                        <h3>{eventTimeTable.name}</h3>
+                        <h6>{eventTimeTable.description}</h6>
+                    </div>
+                    <div class="ms-auto text-danger" id={`status-${eventTimeTable.id}`}>
+                        <h3></h3>
+                    </div>
+                </div>
             }
-        }
-        if (index >= 0 && isActiveTimeTable) {
-            index += 1;
-        }
-
-        if (index < data.length) {
-            const startTime = moment(data[index].startTime).format("hh:mm:ss");
-            if (startTime > currTime)
-                makeTimeTableAsNext(data[index].id, true);
-        }
+        });
+        setHtml(createHtml);
     }
 
-
-    const dispatch = useDispatch();
-
-    const listItems = data.map((eventTimeTable) => {
-        const startTime = new Date(eventTimeTable.startTime).toString().split(' ');
-        const endTime = new Date(eventTimeTable.endTime).toString().split(' ');
-        const startTimeFormatted = `${startTime[4].split(":")[0]}:${startTime[4].split(":")[1]}`;
-        const endTimeFormatted = `${endTime[4].split(":")[0]}:${endTime[4].split(":")[1]}`;
-        return <div className="box d-flex align-items-center my-3" id={`main-${eventTimeTable.id}`}>
-            <div className="box-style" id={`time-${eventTimeTable.id}`}>
-                <h2>{startTimeFormatted}</h2>
-                <h5>-{endTimeFormatted}</h5>
-            </div>
-            <div className="ms-3">
-                <h3>{eventTimeTable.name}</h3>
-                <h6>{eventTimeTable.description}</h6>
-            </div>
-            <div class="ms-auto text-danger" id={`status-${eventTimeTable.id}`}>
-                {/* <h3>Next</h3> */}
-            </div>
-        </div>
-    }
-    );
     return (
         <>
             <section>
@@ -147,7 +107,7 @@ const EventTimeTableSchedule = () => {
                     ?
                     <div className="container relative">
                         <div className="bforeTimeline">
-                            {listItems}
+                            {html}
                         </div>
                     </div>
                     :
